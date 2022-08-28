@@ -40,10 +40,20 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
+  let counter = 0;
   for (let i = 0; i < 5; i++) {
     let playerSelection = prompt("Whats your choice");
     const computerSelection = getComputerChoice();
-    console.log(playRound(playerSelection, computerSelection));
+    let result = playRound(playerSelection, computerSelection);
+    console.log(result);
+    if (result.includes("You win")) {
+      counter++;
+    }
+  }
+  if (counter >= 3) {
+    console.log("You win. " + counter + " wins.");
+  } else {
+    console.log("You lose. " + counter + " win(s).");
   }
 }
 game();
