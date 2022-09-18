@@ -9,7 +9,8 @@ function getComputerChoice() {
     return "scissors";
   }
 }
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
+  let computerSelection = getComputerChoice();
   if (playerSelection.toLowerCase() == "rock") {
     if (computerSelection == "paper") {
       return "You lose! Paper beats Rock";
@@ -41,19 +42,35 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
   let counter = 0;
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt("Whats your choice");
-    const computerSelection = getComputerChoice();
-    let result = playRound(playerSelection, computerSelection);
-    console.log(result);
-    if (result.includes("You win")) {
-      counter++;
-    }
-  }
-  if (counter >= 3) {
-    console.log("You win. " + counter + " wins.");
-  } else {
-    console.log("You lose. " + counter + " win(s).");
+  let score = 0;
+  const choice = document.getElementsByClassName("choice");
+  for (let i = 0; i < choice.length; i++) {
+    choice[i].addEventListener("click", function () {
+      let result = playRound(choice[i].getAttribute("id"));
+      if (result.includes("You win")) {
+        score++;
+      }
+      if (counter < 5) {
+        let div = document.querySelector("#score");
+        counter++;
+        div.textContent = "Game number " + counter;
+
+        const div2 = document.createElement("div");
+        div2.textContent = result;
+        div.appendChild(div2);
+
+        const div3 = document.createElement("div");
+        div3.textContent = "Score: " + score;
+        div.appendChild(div3);
+        if (counter == 5) {
+          if (score >= 3) {
+            div.textContent = "You win. " + score + " wins.";
+          } else {
+            div.textContent = "You lose. " + score + " win(s).";
+          }
+        }
+      }
+    });
   }
 }
 game();
